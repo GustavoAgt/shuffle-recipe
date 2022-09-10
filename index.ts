@@ -7,7 +7,7 @@ import App from "./src/app";
 
 const app: Express = App.Instance.getApp();
 
-app.listen(8001, () =>
+app.listen(PORT, () =>
   console.log(
     `⚡️[server]: Shuffle Recipe is running at https://localhost:${PORT}`
   )

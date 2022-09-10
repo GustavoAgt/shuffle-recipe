@@ -11,12 +11,12 @@ class App {
   private readonly app: Express = express();
 
   private constructor() {
+    this.app.use(helmet());
+    this.app.use(morgan("dev"));
     this.app.use(cors());
     this.app.use(express.json());
     this.app.use(new ConfigRouter().autoConfig("route"));
     this.app.use(exceptionHandle);
-    this.app.use(helmet());
-    this.app.use(morgan("dev"));
 
     dbConnect().then(() => {
       console.log("⚡️[server]: Shuffle Recipe succesfully connect to MongoDB");
