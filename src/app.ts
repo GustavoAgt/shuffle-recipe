@@ -15,12 +15,21 @@ class App {
     this.app.use(morgan("dev"));
     this.app.use(cors());
     this.app.use(express.json());
-    this.app.use(new ConfigRouter().autoConfig("route"));
+    this.app.use(new ConfigRouter().autoConfig("routes"));
     this.app.use(exceptionHandle);
+  }
 
-    dbConnect().then(() => {
-      console.log("⚡️[server]: Shuffle Recipe succesfully connect to MongoDB");
-    });
+  public async startMongoDB(): Promise<boolean> {
+    try {
+      await dbConnect();
+      return true;
+    } catch (error) {
+      console.log(
+        "⚡️[server]: Error connecting to mongo, please check conecction info is properly provided."
+      );
+    }
+
+    return false;
   }
 
   public getApp(): Express {

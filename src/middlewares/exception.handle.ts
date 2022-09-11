@@ -4,7 +4,7 @@ import HttpException from "../utils/HttpException";
 
 export const exceptionHandle = (
   error: Error,
-  req: Request,
+  _: Request,
   res: Response,
   next: NextFunction
 ) => {

@@ -1,5 +1,5 @@
 import { Response } from "express";
-import { hashPassword, verifyPwd } from "./../utils/security.handle";
+import { hashPassword, verifyPassword } from "./../utils/security.handle";
 import { HttpStatus } from "./../utils/HttpStatus";
 import { User } from "../types/user.type";
 import UserModel from "../models/user.model";
@@ -58,7 +58,10 @@ const loginServ = async ({ username, password }: User) => {
     return response;
   }
 
-  const isAVerifiedPwd = await verifyPwd(password, (response as User).password);
+  const isAVerifiedPwd = await verifyPassword(
+    password,
+    (response as User).password
+  );
 
   if (isAVerifiedPwd && response._id) {
     const token = await generateToken(response._id);

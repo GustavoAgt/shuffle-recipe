@@ -5,6 +5,6 @@ export const hashPassword = async (password: string) => {
   return passwordHashed;
 };
 
-export const verifyPwd = async (pwd: string, hashedPwd: string) => {
+export const verifyPassword = async (pwd: string, hashedPwd: string) => {
   return await compare(pwd, hashedPwd);
 };
