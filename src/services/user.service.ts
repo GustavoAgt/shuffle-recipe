@@ -1,4 +1,3 @@
-import { Response } from "express";
 import { hashPassword, verifyPassword } from "./../utils/security.handle";
 import { HttpStatus } from "./../utils/HttpStatus";
 import { User } from "../types/user.type";
@@ -31,17 +30,10 @@ const findUserByUsername = async (username: string) => {
   return response;
 };
 
-const validateUsername = async (username: string) => {
+async function validateUsername(username: string) {
   const response = await findUserByUsername(username);
 
   if (!(response instanceof HttpException)) {
-    if (!username) {
-      return new HttpException(
-        "username is not valid",
-        HttpStatus.UNPROCESSABLE_ENTITY
-      );
-    }
-
     if (response?.username) {
       return new HttpException(
         "username already exist",
@@ -49,7 +41,7 @@ const validateUsername = async (username: string) => {
       );
     }
   }
-};
+}
 
 const loginServ = async ({ username, password }: User) => {
   const response = await findUserByUsername(username);
@@ -65,11 +57,21 @@ const loginServ = async ({ username, password }: User) => {
 
   if (isAVerifiedPwd && response._id) {
     const token = await generateToken(response._id);
-
     return { token, user: { id: response._id, username: response.username } };
   } else {
     return new HttpException("incorrect password", HttpStatus.FORBIDDEN);
   }
 };
 
-export { insertUser, loginServ };
+const findUserServ = async (id: any) => {
+  const response = await UserModel.findOne({ _id: id }, { password: 0 });
+  return response;
+};
+
+export {
+  insertUser,
+  loginServ,
+  findUserServ,
+  validateUsername,
+  findUserByUsername,
+};

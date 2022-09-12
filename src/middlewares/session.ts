@@ -4,7 +4,7 @@ import { HttpStatus } from "./../utils/HttpStatus";
 import HttpException from "../utils/HttpException";
 import { verifyToken } from "../utils/jwt.handle";
 
-type RequestExt = Request & {
+export type RequestExt = Request & {
   user?: string | JwtPayload;
 };
 

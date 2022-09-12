@@ -8,7 +8,7 @@ describe("Testing security.handle.ts", () => {
     hashedPwd = await hashPassword(MOCKED_PWD);
   });
 
-  test("should hash password func", async () => {
+  test("should hash password func", () => {
     expect(hashedPwd).not.toEqual(MOCKED_PWD);
   });
 

@@ -1,6 +1,7 @@
+import { RequestExt } from "./../middlewares/session";
 import { HttpStatus } from "./../utils/HttpStatus";
 import { NextFunction, Request, Response } from "express";
-import { insertUser, loginServ } from "../services/user.service";
+import { insertUser, loginServ, findUserServ } from "../services/user.service";
 import { User } from "../types/user.type";
 import HttpException from "../utils/HttpException";
 import { userSchema } from "../validation-schemas/user.schema";
@@ -60,4 +61,14 @@ const loginUser = async (
   }
 };
 
-export { registerUser, loginUser };
+const findUser = async (req: RequestExt, res: Response, next: NextFunction) => {
+  try {
+    const id = (req.user as any).id;    
+    const response: User = (await findUserServ(id)) as User;
+    res.status(HttpStatus.OK).send(response);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export { registerUser, loginUser, findUser };

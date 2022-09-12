@@ -3,6 +3,8 @@ import { Recipe } from "../types/recipe.type";
 import { NextFunction, Request, Response } from "express";
 import { findAllRecipesByUser, insertRecipe } from "../services/recipe.service";
 import { User } from "../types/user.type";
+import { recipeSchema } from "../validation-schemas/recipe.schema";
+import HttpException from "../utils/HttpException";
 
 const findAllRecipes = async (
   { params }: Request,
@@ -26,6 +28,13 @@ const createRecipe = async (
 ) => {
   try {
     const recipe: Recipe = Object.assign({}, { ...body });
+    const error = recipeSchema.validate(recipe).error;
+    if (error) {
+      throw new HttpException(
+        `${error.message}`,
+        HttpStatus.UNPROCESSABLE_ENTITY
+      );
+    }
     const response = await insertRecipe(recipe);
     res.status(HttpStatus.CREATED).send(response);
   } catch (error) {
