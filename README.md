@@ -6,7 +6,7 @@
 In the project directory, you can run:
 
 ### `npm install`
-Install al the packages need for the app to work.
+Install all the packages needed for the app to work.
 
 ### `npm run dev`
 
