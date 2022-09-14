@@ -14,7 +14,10 @@ const insertUser = async (user: User) => {
 
   const pwdHashed = await hashPassword(user.password);
 
-  const response = await UserModel.create({ ...user, password: pwdHashed });
+  const response = await UserModel.create(
+    { ...user, password: pwdHashed },
+    { password: 0 }
+  );
   return response;
 };
 

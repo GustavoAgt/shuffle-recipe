@@ -28,6 +28,7 @@ const createRecipe = async (
 ) => {
   try {
     const recipe: Recipe = Object.assign({}, { ...body });
+    
     const error = recipeSchema.validate(recipe).error;
     if (error) {
       throw new HttpException(

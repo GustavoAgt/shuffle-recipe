@@ -1,28 +1,29 @@
+import * as jwt from "../utils/jwt.handle";
 import * as session from "./../middlewares/session";
+import * as jsonWToken from "jsonwebtoken";
 
-describe("Testing Session.ts", () => {
+describe("testing session.ts", () => {
   const validToken =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMWJjMDA2NjFjZTBkNjMwNDY5NzIzYiIsImlhdCI6MTY2MjgxNTE5MSwiZXhwIjoxNjYyODU4MzkxfQ.V7zV4ZU1l2yFgnt6rHJ8-8zECTy6UKFql-BA_8xh_wU";
-  const mockRequest: any = jest.fn(() => ({
-    headers: jest.fn().mockReturnValue({
+  const req: any = {
+    headers: {
       authorization: `Bearer ${validToken}`,
-    }),
-    user: jest.fn(),
-  }));
-
-  const mockResponse: any = {
-    status: jest.fn().mockReturnValue({ send: jest.fn() }),
+    },
+    user: {},
   };
 
-  const mockNext: any = jest.fn((error: Error) => {});
+  const res: any = {
+    status: jest.fn().mockReturnValue({ send: jest.fn() }),
+    send: jest.fn((obj: {}) => {}),
+  };
 
-  test("Should verify session by request", () => {
-    const sessionMock = jest
-      .spyOn(session, "checkSession")
-      .mockImplementation(jest.fn());
+  const obj = { next: jest.fn() };
 
-    session.checkSession(mockRequest, mockResponse, mockNext);
-    expect(sessionMock).toHaveBeenCalled();
+  test("should verify session by request", () => {
+    const spy = jest.spyOn(obj, "next").mockImplementation(jest.fn());
+    jsonWToken.verify.prototype = jest.fn().mockImplementation(()=> { return true})
+    session.checkSession(req, res, obj.next);
+    expect(spy).toHaveBeenCalled();
   });
 
   afterEach(() => {

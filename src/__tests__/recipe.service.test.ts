@@ -7,7 +7,7 @@ describe("Testing recipe.serice.ts", () => {
   const mockRecipe: Recipe = {
     title: "Cow fish, grilled",
     description: "good fish for dinner",
-    cookingDuration: 427777,
+    duration: 427777,
     user: { username: "Gustav", password: "Eiffel" },
   };
 

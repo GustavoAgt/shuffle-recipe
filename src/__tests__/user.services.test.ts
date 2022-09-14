@@ -1,4 +1,4 @@
-import { User } from "./../../../shuffle-client/src/types/user.types";
+import { User } from "../types/user.type";
 import UserModel from "../models/user.model";
 import * as userServ from "../services/user.service";
 import App from "../app";
@@ -12,7 +12,7 @@ describe("Testins user.services.ts", () => {
   const mockUser: User = {
     username: "Gustav",
     password: "Eiffel",
-  };
+  }
 
   test("should insert an user", async () => {
     expect.assertions(1);
