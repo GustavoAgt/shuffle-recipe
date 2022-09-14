@@ -1,5 +1,5 @@
 # shuffle-recipe-backend
-### This project was created by using Node.js, Express, Mongo, React v18+ and Redux toolkit.
+### This project was created by using Node.js, Express, Mongo.
 
 ## Available Scripts
 
